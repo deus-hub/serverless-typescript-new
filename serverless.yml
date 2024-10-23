@@ -1,0 +1,44 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+# org: deusserverless
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+# app: node-tut-serverless
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: node-tut-severless
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-plugin-typescript
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: ${opt:region, 'eu-west-2'}
+  stage: ${opt:stage, 'production'}
+  timeout: 30
+  memorySize: 128
+  httpApi:
+    authorizers:
+      authenticate:
+        type: request
+        functionName: auth
+
+functions:
+  # auth:
+  #   handler: src/middlewares/auth.authMiddleware
+
+  welcome:
+    handler: src/handlers/rootHandler.handler
+    description: app welcome page
+    events:
+      - httpApi:
+          path: /api
+          method: GET
+  
+  register:
+    handler: src/handlers/controllers/auth.register
+    description: registration handler
+    events:
+      - httpApi:
+          path: /api/register
+          method: POST
