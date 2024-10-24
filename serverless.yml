@@ -24,8 +24,8 @@ provider:
         functionName: auth
 
 functions:
-  # auth:
-  #   handler: src/middlewares/auth.authMiddleware
+  auth:
+    handler: src/middleware/auth.authMiddleware
 
   welcome:
     handler: src/handlers/rootHandler.handler
@@ -42,3 +42,22 @@ functions:
       - httpApi:
           path: /api/register
           method: POST
+
+  login:
+    handler: src/handlers/controllers/auth.login
+    description: login handler
+    events:
+      - httpApi:
+          path: /api/login
+          method: POST
+
+  user:
+    handler: src/handlers/controllers/auth.user
+    description: auth user handler
+    events:
+      - httpApi:
+          path: /api/user
+          method: GET
+          authorizer:
+            name: auth
+            type: request
