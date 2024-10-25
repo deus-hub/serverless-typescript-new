@@ -114,8 +114,7 @@ export const user: Handler = async (
     _context: Context
 ): Promise<APIGatewayProxyStructuredResultV2> => {
     try {
-        console.log('I got access');
-        const { authUser } = JSON.parse(_event.body as any);
+        const authUser = JSON.parse(_event.requestContext?.authorizer?.lambda?.extras).user;
         if (!authUser) {
             return new Exception("User not found", 404);
         }

@@ -61,3 +61,14 @@ functions:
           authorizer:
             name: auth
             type: request
+
+  create product:
+    handler: src/handlers/controllers/product.create
+    description: create product handler
+    events:
+      - httpApi:
+          path: /api/product/create
+          method: POST
+          authorizer:
+            name: auth
+            type: request

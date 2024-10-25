@@ -117,9 +117,9 @@ const login = (_event, _context) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.login = login;
 const user = (_event, _context) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b, _c;
     try {
-        console.log('I got access');
-        const { authUser } = JSON.parse(_event.body);
+        const authUser = JSON.parse((_c = (_b = (_a = _event.requestContext) === null || _a === void 0 ? void 0 : _a.authorizer) === null || _b === void 0 ? void 0 : _b.lambda) === null || _c === void 0 ? void 0 : _c.extras).user;
         if (!authUser) {
             return new exception_1.default("User not found", 404);
         }
